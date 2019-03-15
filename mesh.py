@@ -28,13 +28,35 @@ def make_model_matrix(translate,rotation,scale):
     mm= trm @ rxm @ rym @ rzm @ sm
     return mm
 
-print('Hello!')
+class Mesh:
+
+    def __init__(self, obj_filename, position, rotation, scale):
+        vertices, faces, normals, texcoords = io.read_mesh(obj_filename)
+        assert len(vertices[0]) == 3, "Vertices are 3D"
+        assert len(faces[0]) == 3, "Mesh mush be triangulated"
+        self.vertices = vertices
+        self.faces = faces
+        self.postion = position
+        self.rotation = rotation
+        self.scale = scale
+
+        self.model_matrix = make_model_matrix(position, rotation, scale)
+
+
+cup = Mesh('cup1.obj', position=[1,2,3], rotation=[90, 45, 0], scale=[2,2,2])
+#print(cup.faces)
+#print(cup.vertices)
+#cup.position
+print(cup.model_matrix)
+#cup.send()
+#cup.draw()
+
+
+
+#"print('Hello!')"
 mm = make_model_matrix([1,2,3], [90,45,0], [2,2,2])
-print(mm)
+#print(mm)
 
-vertices, faces, normals, texcoords = io.read_mesh('cup1.obj')
-"print (vertices[0])"
-"print (len(vertices[0]))"
 
-assert len(vertices[0]) == 3, "Vertices are 3D"
-assert len(faces[0]) == 3, "Mesh mush be triangulated"
+#"print (vertices[0])"
+#"print (len(vertices[0]))"
