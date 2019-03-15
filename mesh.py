@@ -36,11 +36,40 @@ class Mesh:
         assert len(faces[0]) == 3, "Mesh mush be triangulated"
         self.vertices = vertices
         self.faces = faces
-        self.postion = position
+        self._postion = position
         self.rotation = rotation
         self.scale = scale
-
         self.model_matrix = make_model_matrix(position, rotation, scale)
+
+    @property
+    def position(self):
+        return self._position
+
+    @position.setter
+    def position(self, value):
+        self._position = value
+        self.model_matrix = make_model_matrix(self.position, self.rotation, self.scale)
+
+    @property
+    def rotation(self):
+        return self._rotation
+
+    @rotation.setter
+    def rotation(self, value):
+        self._rotation = value
+        self.model_matrix = make_model_matrix(self.position, self.rotation, self.scale)
+
+    @property
+    def scale(self):
+        return self._scale
+
+    @scale.setter
+    def scale(self, value):
+        self._scale = value
+        self.model_matrix = make_model_matrix(self.position, self.rotation, self.scale)
+
+
+
 
 
 cup = Mesh('cup1.obj', position=[1,2,3], rotation=[90, 45, 0], scale=[2,2,2])
@@ -50,8 +79,7 @@ cup = Mesh('cup1.obj', position=[1,2,3], rotation=[90, 45, 0], scale=[2,2,2])
 print(cup.model_matrix)
 #cup.send()
 #cup.draw()
-
-
+cup.position = [3,3,3]
 
 #"print('Hello!')"
 mm = make_model_matrix([1,2,3], [90,45,0], [2,2,2])
