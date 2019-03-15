@@ -36,37 +36,14 @@ class Mesh:
         assert len(faces[0]) == 3, "Mesh mush be triangulated"
         self.vertices = vertices
         self.faces = faces
-        self._postion = position
+        self.postion = position
         self.rotation = rotation
         self.scale = scale
-        self.model_matrix = make_model_matrix(position, rotation, scale)
 
     @property
-    def position(self):
-        return self._position
+    def model_matrix(self):
+        return make_model_matrix(self.position, self.rotation, self.scale)
 
-    @position.setter
-    def position(self, value):
-        self._position = value
-        self.model_matrix = make_model_matrix(self.position, self.rotation, self.scale)
-
-    @property
-    def rotation(self):
-        return self._rotation
-
-    @rotation.setter
-    def rotation(self, value):
-        self._rotation = value
-        self.model_matrix = make_model_matrix(self.position, self.rotation, self.scale)
-
-    @property
-    def scale(self):
-        return self._scale
-
-    @scale.setter
-    def scale(self, value):
-        self._scale = value
-        self.model_matrix = make_model_matrix(self.position, self.rotation, self.scale)
 
 
 
