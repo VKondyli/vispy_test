@@ -4,29 +4,7 @@ from vispy.util import transforms as tr
 
 np.set_printoptions(suppress=True, precision=2)
 
-def make_model_matrix(translate,rotation,scale):
 
-    """
-    Rreturn a 4x4 model matrixself.
-
-    Arguments:
-     - translation : x,y,z coordinates
-     - rotation: x,y,z  rotation (degrees)
-     - scale x,y,z  scaleself.
-
-    Returns:
-     - model_matrix: 4x4 array
-    """
-
-
-    sm = tr.scale(scale).T
-    rx, ry,rz = rotation
-    rzm = tr.rotate(rz,[0,0,1]).T
-    rym = tr.rotate(ry,[0,1,0]).T
-    rxm = tr.rotate(rx,[1,0,0]).T
-    trm = tr.translate(translate).T
-    mm= trm @ rxm @ rym @ rzm @ sm
-    return mm
 
 class Mesh:
 
@@ -43,6 +21,33 @@ class Mesh:
     @property
     def model_matrix(self):
         return make_model_matrix(self.position, self.rotation, self.scale)
+
+
+
+
+def model_matrix(self):
+
+    """
+    Rreturn a 4x4 model matrixself.
+
+    Arguments:
+     - translation : x,y,z coordinates
+     - rotation: x,y,z  rotation (degrees)
+     - scale x,y,z  scaleself.
+
+    Returns:
+     - model_matrix: 4x4 array
+    """
+
+
+    sm = tr.scale(self.scale).T
+    rx, ry,rz = self.rotation
+    rzm = tr.rotate(rz,[0,0,1]).T
+    rym = tr.rotate(ry,[0,1,0]).T
+    rxm = tr.rotate(rx,[1,0,0]).T
+    trm = tr.translate(self.translate).T
+    mm= trm @ rxm @ rym @ rzm @ sm
+    return mm
 
 
 
